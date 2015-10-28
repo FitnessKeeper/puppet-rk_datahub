@@ -1,0 +1,5 @@
+---
+# DataHub
+rk_datahub::repo: http://rep.logentries.com/datahub
+rk_datahub::version: 1.2.0.479
+rk_datahub::java_pkg: openjdk-7-jre-headless

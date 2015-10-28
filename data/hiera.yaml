@@ -1,0 +1,7 @@
+---
+:hierarchy:
+    - secrets
+    - common
+:merge_behavior: deeper
+:deep_merge_options:
+  :merge_hash_arrays: true

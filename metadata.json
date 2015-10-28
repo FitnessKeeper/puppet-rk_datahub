@@ -1,0 +1,14 @@
+{
+  "name": "fitnesskeeper/rk_datahub",
+  "version": "0.1.0",
+  "author": "fitnesskeeper",
+  "summary": "Deploy Logentries DataHub on an AWS instance",
+  "license": "Apache-2.0",
+  "source": "https://github.com/FitnessKeeper/puppet-rk_datahub",
+  "project_page": "https://github.com/FitnessKeeper/puppet-rk_datahub",
+  "issues_url": "https://github.com/FitnessKeeper/puppet-rk_datahub/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 4.0.0"}
+  ]
+}
+
