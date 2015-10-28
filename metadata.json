@@ -8,7 +8,8 @@
   "project_page": "https://github.com/FitnessKeeper/puppet-rk_datahub",
   "issues_url": "https://github.com/FitnessKeeper/puppet-rk_datahub/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 4.0.0"}
+    {"name":"puppetlabs-stdlib","version_requirement":">= 4.0.0"},
+    {"name":"maestrodev-wget","version_requirement":">= 1.7.1"}
   ]
 }
 
