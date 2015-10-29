@@ -11,7 +11,7 @@ REGION=$(echo "$AZ" | sed 's/[[:alpha:]]$//')
 
 AWS="aws --region $REGION"
 
-echo "### Provisioning Jenkins ${TARGET}..."
+echo "### Provisioning DataHub..."
 
 echo "### Patching system..."
 yum -y update
