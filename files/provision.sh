@@ -5,14 +5,6 @@ if [[ "${USER}" -ne 0 ]]; then
   exit 1
 fi
 
-if [[ -n "$1" && "$1" = 'builder' ]]; then
-  TARGET='builder'
-  IS_MASTER='false'
-else
-  TARGET='master'
-  IS_MASTER='true'
-fi
-
 # determine AWS region
 AZ=$(ec2-metadata -z | awk '{print $2}')
 REGION=$(echo "$AZ" | sed 's/[[:alpha:]]$//')
@@ -32,7 +24,7 @@ yum -y install git jq
 
 cd ~
 
-echo "### Cloning Jenkins platform configuration..."
+echo "### Cloning DataHub platform configuration..."
 git clone https://github.com/FitnessKeeper/puppet-rk_datahub.git rk_datahub
 
 echo "### Copying secrets..."
@@ -74,7 +66,7 @@ cat > /etc/hiera/hiera.yaml << 'HIERA'
 :backends:
   - module_data
 HIERA
-puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e "class { 'rk_datahub': master => $IS_MASTER }"
+puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e "class { 'rk_datahub': }"
 
 echo "### Disabling Puppet agent..."
 puppet resource service puppet ensure=stopped enable=false
