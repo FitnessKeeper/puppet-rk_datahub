@@ -38,7 +38,7 @@ class rk_datahub (
 
   service { 'datahub':
     ensure     => stopped,
-    enabled    => true,
+    enable     => true,
     hasstatus  => true,
     hasrestart => true,
   }
