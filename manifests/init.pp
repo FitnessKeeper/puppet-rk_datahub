@@ -18,7 +18,6 @@ class rk_datahub (
 
   wget::fetch { $datahub_remote_pkg:
     destination => $datahub_local_pkg,
-    cachedir    => '/tmp',
     timeout     => 0,
     verbose     => true,
   } ->
