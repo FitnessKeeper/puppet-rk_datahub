@@ -7,6 +7,7 @@ class rk_datahub (
   $user_keys = {},
   $tier = 'production'
 ) {
+  validate_re($::osfamily, '^Debian$', "DataHub requires a Debian-derived Linux distribution, not '${::osfamily}'.")
   validate_re($tier, '^(production|staging)$', "\$tier must be 'production' or 'staging', not '${tier}'.")
 
   $user_key = $user_keys[$tier]
