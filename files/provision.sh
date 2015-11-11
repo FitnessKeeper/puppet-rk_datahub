@@ -11,7 +11,7 @@ REGION=$(echo "$AZ" | sed 's/[[:alpha:]]$//')
 
 AWS="aws --region $REGION"
 
-echo "### Provisioning DataHub..."
+echo "### Provisioning..."
 
 echo "### Patching system..."
 yum -y update
@@ -24,16 +24,18 @@ yum -y install git jq
 
 cd ~
 
-echo "### Cloning DataHub platform configuration..."
+echo "### Cloning Tomcat platform configuration..."
 git clone https://github.com/FitnessKeeper/puppet-rk_datahub.git rk_datahub
 
 echo "### Copying secrets..."
-touch rk_datahub/data/secrets.yaml \
-  && chmod 600 rk_datahub/data/secrets.yaml \
-  && $AWS s3 cp s3://rk-devops-${REGION}/secrets/secrets.yaml rk_datahub/data/secrets.yaml
+for i in 'secrets' 'secrets-common'; do
+  touch "rk_datahub/data/${i}.yaml" \
+    && chmod 600 "rk_datahub/data/${i}.yaml" \
+    && $AWS s3 cp "s3://rk-devops-${REGION}/secrets/${i}.yaml" "rk_datahub/data/${i}.yaml"
+done
 
-if [ ! -r "rk_datahub/data/secrets.yaml" ]; then
-  echo "Populate the secrets.yaml file and then run $0 again."
+if [ ! -r "rk_datahub/data/secrets-common.yaml" ]; then
+  echo "Populate the secrets-common.yaml file and then run $0 again."
   exit 0
 fi
 
@@ -66,7 +68,7 @@ cat > /etc/hiera/hiera.yaml << 'HIERA'
 :backends:
   - module_data
 HIERA
-puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e "class { 'rk_datahub': }"
+puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e 'class { "rk_datahub": }'
 
 echo "### Disabling Puppet agent..."
 puppet resource service puppet ensure=stopped enable=false
