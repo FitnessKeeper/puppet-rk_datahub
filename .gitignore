@@ -1,5 +1,4 @@
 .env
 .tmp/
 modules/
-data/secrets.yaml
-files/storeSecrets.sh
+data/secrets*
