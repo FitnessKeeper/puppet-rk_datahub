@@ -1,6 +1,7 @@
 ---
 :hierarchy:
     - secrets
+    - secrets-common
     - common
 :merge_behavior: deeper
 :deep_merge_options:
