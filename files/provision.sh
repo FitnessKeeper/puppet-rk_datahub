@@ -6,7 +6,7 @@ if [[ "${USER}" -ne 0 ]]; then
 fi
 
 # determine AWS region
-AZ=$(ec2-metadata -z | awk '{print $2}')
+AZ=$(ec2metadata --availability-zone)
 REGION=$(echo "$AZ" | sed 's/[[:alpha:]]$//')
 
 AWS="aws --region $REGION"
@@ -14,13 +14,16 @@ AWS="aws --region $REGION"
 echo "### Provisioning..."
 
 echo "### Patching system..."
-yum -y update
+export DEBIAN_FRONTEND=noninteractive
+APTGET='apt-get -o Dpkg::Options::="--force-confnew" -y'
+apt-add-repository "deb http://${REGION}.ec2.archive.ubuntu.com/ubuntu/ trusty-backports main restricted universe multiverse"
+aptitude -y update && $APTGET upgrade
 
 echo "### Uninstalling upstream Puppet..."
-yum -y erase puppet
+aptitude -y purge puppet
 
 echo "### Installing utilities..."
-yum -y install git jq
+aptitude -y install awscli git jq/trusty-backports
 
 cd ~
 
@@ -42,7 +45,7 @@ fi
 cd rk_datahub
 
 echo "### Configuring RubyGems..."
-yum -y install ruby-devel glibc-devel gcc
+aptitude -y install ruby-dev libc-dev libaugeas-dev ruby-augeas gcc make
 cat > /root/.gemrc << 'GEMRC'
 ---
 install: --nodocument --bindir /usr/local/bin
@@ -56,7 +59,6 @@ bundle install
 
 echo "### Installing Puppet dependencies..."
 export PUPPET_MODULE_DIR='/etc/puppetlabs/code/modules'
-yum -y install ruby20-augeas
 librarian-puppet config path "$PUPPET_MODULE_DIR" --global
 librarian-puppet install
 ln -s /root/rk_datahub "${PUPPET_MODULE_DIR}/rk_datahub"
@@ -69,9 +71,6 @@ cat > /etc/hiera/hiera.yaml << 'HIERA'
   - module_data
 HIERA
 puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e 'class { "rk_datahub": }'
-
-echo "### Disabling Puppet agent..."
-puppet resource service puppet ensure=stopped enable=false
 
 cd ..
 

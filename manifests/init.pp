@@ -15,6 +15,9 @@ class rk_datahub (
   $datahub_remote_pkg = "${repo}/DataHub_${version}.deb"
   $datahub_local_pkg = "/root/datahub.deb"
 
+  package { $java_pkg:
+    ensure => present,
+  } ->
 
 
   wget::fetch { $datahub_remote_pkg:
@@ -24,7 +27,7 @@ class rk_datahub (
   } ->
 
   package { 'datahub':
-    ensure   => installed,
+    ensure   => present,
     provider => 'dpkg',
     source   => $datahub_local_pkg,
   } ->
