@@ -1,30 +1,39 @@
 {
+  "reporter": {
+    "current_version": "1.2.0.479",
+    "update_datahub": false,
+    "previous_version": "",
+    "interval": 5,
+    "token": "not used",
+    "user_key": "<%= @user_key %>",
+    "autoupdate": true,
+    "update_to_version": null,
+    "update_version_date": ""
+  },
+  "backend": {
+    "encrypt_s3_logs": true,
+    "amazon_s3_bucket": "testbucketxxxxxxxx0001",
+    "local_path": "/etc/datahub",
+    "amazon_s3_encryption_key_file": "/etc/datahub/rsa.public.key",
+    "amazon_s3_secret_key": "4E25vMihNiU8GbPxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "amazon_s3_account_id": "AKIAxxxxxxxxxxxxxxxx"
+  },
   "logging": {
     "default": {
-      "logLocally": false,
       "sendToLogentries": true,
+      "logLocally": false,
       "logInterval": 1
     },
     "heartbeat": {
-      "logLocally": false,
       "sendToLogentries": true,
+      "logLocally": false,
       "logInterval": 5
     },
     "system-stats": {
-      "logLocally": false,
       "sendToLogentries": true,
+      "logLocally": false,
       "logInterval": 5
     }
   },
-  "reporter": {
-    "interval": 5,
-    "user_key": "<%= @user_key %>",
-    "token": "not used",
-    "autoupdate": true,
-        "update_datahub": false
-        "update_version_date": "",
-    "update_to_version": null,
-    "previous_version": "",
-    "current_version": "1.2.0"
-  }
+  "rules": [{"pattern": ".*"}]
 }
