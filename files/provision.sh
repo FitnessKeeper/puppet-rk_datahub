@@ -72,6 +72,9 @@ cat > /etc/hiera/hiera.yaml << 'HIERA'
 HIERA
 puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e 'class { "rk_datahub": }'
 
+echo "### Cleaning up..."
 cd ..
+rm -rf rk_datahub
+rm -rf /etc/puppetlabs/code/modules/*
 
 echo "### Provision complete."
