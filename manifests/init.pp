@@ -4,16 +4,16 @@ class rk_datahub (
   $version,
   $repo,
   $java_pkg,
-  $user_keys,
+  $user_keys = {},
   $tier = 'production'
 ) {
   validate_re($::osfamily, '^Debian$', "DataHub requires a Debian-derived Linux distribution, not '${::osfamily}'.")
   validate_re($tier, '^(production|staging)$', "\$tier must be 'production' or 'staging', not '${tier}'.")
-  validate_hash($user_keys)
+  # validate_hash($user_keys)
 
   $user_key = $user_keys[$tier]
 
-  validate_slength($user_key, 36, 1)
+  # validate_slength($user_key, 36, 1)
 
   $datahub_remote_pkg = "${repo}/DataHub_${version}.deb"
   $datahub_local_pkg = "/root/datahub.deb"
