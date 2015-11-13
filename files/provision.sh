@@ -27,7 +27,7 @@ aptitude -y install awscli git jq/trusty-backports
 
 cd ~
 
-echo "### Cloning Tomcat platform configuration..."
+echo "### Cloning DataHub platform configuration..."
 git clone https://github.com/FitnessKeeper/puppet-rk_datahub.git rk_datahub
 
 echo "### Copying secrets..."
