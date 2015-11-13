@@ -1,1 +1,1 @@
-files/storeSecrets.sh
+storeSecrets.sh
