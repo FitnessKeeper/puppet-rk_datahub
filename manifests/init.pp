@@ -49,4 +49,6 @@ class rk_datahub (
     hasrestart => true,
   }
 
+  class { 'rk_datahub::aws': }
+
 }

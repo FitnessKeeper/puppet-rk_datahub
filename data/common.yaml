@@ -3,3 +3,8 @@
 rk_datahub::repo: http://rep.logentries.com/datahub
 rk_datahub::version: 1.2.0.479
 rk_datahub::java_pkg: openjdk-7-jre-headless
+
+rk_datahub::aws::prereqs:
+  - python-setuptools
+rk_datahub::aws::cfn_url: https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz
+rk_datahub::aws::cfn_dir: /root/aws-cfn-bootstrap-latest
