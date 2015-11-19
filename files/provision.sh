@@ -64,13 +64,18 @@ librarian-puppet install
 ln -s /root/rk_datahub "${PUPPET_MODULE_DIR}/rk_datahub"
 
 echo "### Running Puppet agent..."
+mkdir -p /var/log/puppet
 mkdir -p /etc/hiera
 cat > /etc/hiera/hiera.yaml << 'HIERA'
 ---
 :backends:
   - module_data
 HIERA
-puppet apply --hiera_config "/etc/hiera/hiera.yaml" --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" -e 'class { "rk_datahub": }'
+puppet apply \
+  --hiera_config "/etc/hiera/hiera.yaml" \
+  --modulepath "$(pwd)/modules:/etc/puppetlabs/code/modules" \
+  --logdest "/var/log/puppet/provision.log" \
+  -e 'class { "rk_datahub": }'
 
 echo "### Cleaning up..."
 cd ..
